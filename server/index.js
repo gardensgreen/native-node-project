@@ -14,6 +14,13 @@ const server = http.createServer(async (req, res) => {
             return;
         }
 
+        if (req.url === "/items/new") {
+            const html = await readFile("./views/add-item.html");
+            res.setHeader("Content-Type", `text/html`);
+            res.statusCode = 200;
+            res.end(html);
+            return;
+        }
         res.statusCode = 200;
         res.setHeader("Content-Type", "text/plain");
         res.end("I have items.");
