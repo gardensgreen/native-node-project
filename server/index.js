@@ -18,7 +18,10 @@ const server = http.createServer(async (req, res) => {
         res.setHeader("Content-Type", "text/plain");
         res.end("I have items.");
     } catch (err) {
+        res.statusCode = 404;
+        res.end();
         console.log("ERROR: ", err);
+        return;
     }
 });
 
