@@ -1,6 +1,7 @@
 const http = require("http");
 const { readFile } = require("fs").promises;
 const path = require("path");
+const { Item } = require("../models");
 
 const server = http.createServer(async (req, res) => {
     try {
@@ -21,9 +22,13 @@ const server = http.createServer(async (req, res) => {
             res.end(html);
             return;
         }
+
+        let items = await Item.findAll();
+
         res.statusCode = 200;
-        res.setHeader("Content-Type", "text/plain");
-        res.end("I have items.");
+        res.setHeader("Content-Type", "text/html");
+        res.end(`<div><a href="/items/new">Add a new item</a></div>
+        I have ${items.length} items.`);
     } catch (err) {
         res.statusCode = 404;
         res.end();
